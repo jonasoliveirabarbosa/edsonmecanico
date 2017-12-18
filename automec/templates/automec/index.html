@@ -1,0 +1,87 @@
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">  <html lang="pt">
+	<html>
+		<head>
+			{% load staticfiles %}
+			<link rel="icon" type="image/png" sizes="32x32" href="{% static "automec/icon/favicon-32x32.png" %}">
+			<link rel="icon" type="image/png" sizes="96x96" href="{% static "automec/icon/favicon-96x96.png" %}">
+			<link rel="icon" type="image/png" sizes="16x16" href="{% static "automec/icon/favicon-16x16.png" %}">
+			<meta http-equiv="content-type" content="text/html; charset=utf-8">
+			<title>Automecânica JJ Edson</title>
+			<link rel=stylesheet type=text/css href="{% static "automec/style.css" %}" >
+			<link rel="stylesheet" href="{% static "automec/fonta/css/font-awesome.min.css" %}">
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+			<script src="{% static "automec/jquery.js" %}"></script>
+			{{ form.media }}
+			{% block head %}
+				{% endblock %}
+			<script src="vendor/select2/dist/js/select2.min.js"></script>
+		</head>
+
+		<body>
+
+		<div id="container">
+						<div id="menu">
+							<div id="menuTitle">Menu</div>
+							<ul class="mainmenu">
+								{% if user.is_authenticated %}
+									<li><a href="{% url 'automec.views.addCliente' %}">Clientes <i class="fa fa-chevron-down"></i></a>
+									<ul class="submenu">
+												<li><a href="{% url 'automec.views.resultadoCliente' %}"> <i class="fa fa-search"></i> Buscar</a>
+													<a a href="{% url 'automec.views.addCliente' %}"> <i class="fa fa-file-o" ></i> Cadastrar</a>
+												</ul>
+											</li>
+											</li>
+									<li><a href="{% url 'automec.views.addCarro' %}">Carros</a></li>
+									<li><a>Serviços <i class="fa fa-chevron-down"></i></a>
+										<ul class="submenu">
+	                        <li><a href="{% url 'automec.views.resultadoServico' %}"> <i class="fa fa-search"></i> Buscar</a>
+														<a href="{% url 'automec.views.addServico' %}"> <i class="fa fa-file-o" ></i> Cadastrar</a>
+													</ul>
+											</li>
+											</li>
+									<li><a href="{% url 'automec.views.addPagamento' %}">Pagamentos</a></li>
+									<li><a href="{% url 'automec.views.addPeca' %}">Peças</a></li>
+									<li><a href="{% url 'automec.views.imprimir' %}" target="_blank">Imprimir</a></li>
+									<li><a href="{% url 'automec.views.rendimentos' %}">Rendimentos</a></li>
+									{%endif%}
+								</ul>
+						</div>
+			<div id="header">
+
+				{% if 'serv_atual' in request.session  %}
+
+
+				<div id="servicoAtivo">
+
+					<b>Serviço Atual</b></br>
+					{{ request.session.serv_atual.carro}}</br>
+				</br>
+					<p class="text">
+							Valor: {{request.session.serv_atual.valorMaoObra}}</br>
+
+						  <a href="/servico/{{ request.session.serv_atual.id }}/editar/"><i class="fa fa-pencil-square-o"></i></a></br>
+						</p>
+				</div>
+				{% endif %}
+
+				Automecânica JJ Edson
+
+				</div>
+
+
+
+			<div id="contents">
+				{% block content %}
+					{% endblock %}
+				{% block footer %}
+					{% endblock %}
+
+			</div>
+
+		</div>
+
+	</body>
+
+
+	</html>

@@ -1,0 +1,31 @@
+{% extends 'automec/index.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div id="forms">
+    <h1>Buscar Cliente</h1>
+    <br>
+    <form action="{% url 'buscar_cliente' %}" method="get" accept-charset="utf-8">
+
+      <input class="formBusca" name="q" type="text" placeholder="Busca">
+    </form>
+    <table>
+  <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Ver</th>
+      <th>Editar</th>
+      <th>Remover</th>
+  </tr>
+  {% for cliente in qs %}
+  <tr>
+      <td>{{ cliente.nome }}</td>
+      <td>{{ cliente.telefone}}</td>
+      <td><a href="/cliente/{{ cliente.id }}/ver/"><i class="fa fa-eye"></i></a></</td>
+      <td><a href="/cliente/{{ cliente.id }}/editar/"><i class="fa fa-pencil-square-o"></i></a></</td>
+      <td><a href="/cliente/{{ cliente.id }}/remove/"><i class="fa fa-minus-square-o"></i></a></</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}

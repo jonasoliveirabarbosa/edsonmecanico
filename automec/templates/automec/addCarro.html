@@ -1,0 +1,51 @@
+{% extends 'automec/index.html' %}
+
+{% block content %}
+    {% load staticfiles %}
+
+    <div id="forms">
+        <h1>Cadastrar Carro</h1>
+        <form method="POST" class="servico-form">{% csrf_token %}
+
+
+           <div class="campo">
+               {{form.marca.field.errors }}
+               {{ form.marca.label_tag }} {{ form.marca }}
+           </div>
+           <div class="campo">
+               {{form.modelo.field.errors }}
+               {{ form.modelo.label_tag }} {{ form.modelo }}
+           </div>
+           <div class="campo">
+               {{form.placa.field.errors }}
+               {{ form.placa.label_tag }} {{ form.placa }}
+           </div>
+           <div class="campo">
+               {{form.ano.field.errors }}
+               {{ form.ano.label_tag }} {{ form.ano }}
+           </div>
+
+           <div class="labelauto">
+             <span align="right">
+               {{form.dono.field.errors }}
+               {{ form.dono.label_tag }}
+           </span>
+           </div>
+           <div class="campoauto">
+           {{ form.dono }}
+           </div>
+
+    <div class="botao">
+            <button type="submit" class="save btn btn-default">Cadastrar</button>
+            </div>
+        </form>
+      </div>
+
+{% endblock %}
+
+
+{% block footer %}
+<script type="text/javascript" src="/static/collected/admin/js/vendor/jquery/jquery.js"></script>
+
+{{ form.media }}
+{% endblock %}

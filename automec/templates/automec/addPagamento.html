@@ -1,0 +1,45 @@
+{% extends 'automec/index.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+	<div id="forms">
+		<h1>Pagamentos</h1>
+		<form method="POST" class="pagamento-form">
+			{% csrf_token %}
+        <table>
+            <tr>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Parcela</th>
+                <th>Editar</th>
+								<th>Ecluir</th>
+            </tr>
+            {% for pagamento in pagamentos %}
+            <tr>
+                <td>{{ pagamento.tipoPagamento }}</td>
+                <td>{{ pagamento.valor }}</td>
+                <td>{{ pagamento.parcelas }}</</td>
+                  <td><a href="/pagamento/{{ pagamento.id }}/editar/"><i class="fa fa-pencil-square-o"></i></a></</td>
+									<td><a href="/pagamento/{{ pagamento.id }}/remove/"><i class="fa fa-minus-square-o"></i></a></</td>
+						</tr>
+            {% endfor %}
+          <tr>
+            <td colspan="5">Valor Total: {{valorTotal}}</td>
+          </tr>
+				</tr>
+					<td colspan="5">Valor Pago: {{pago}}</td>
+				</tr>
+        </tr>
+          <td colspan="5">Valor a Pagar: {{pagar}}</td>
+        </tr>
+      </table>
+
+
+    <form method="POST" class="pagamento-form">{% csrf_token %}
+
+        {{ form.as_p}}
+        <button type="submit" class="save btn btn-default">Cadastrar</button>
+    </form>
+  </div>
+{% endblock %}

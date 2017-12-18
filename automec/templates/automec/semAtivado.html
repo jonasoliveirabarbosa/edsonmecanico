@@ -1,0 +1,24 @@
+{% extends 'automec/index.html' %}
+
+
+
+{% block content %}
+
+<script type="text/JavaScript">
+<!--
+redirectTime = "3000";
+redirectURL = "{% url 'automec.views.resultadoServico' %}";
+window.onload = function timedRedirect() {
+	setTimeout("location.href = redirectURL",redirectTime);
+}
+//   -->
+</script>
+<div id="forms">
+  <h1> Sem Servico Ativado</h1>
+    <h3> É preciso ativar um servico para realizar essa função</h3>
+    <h2> Redirecionando</h2>
+
+
+  </table>
+</div>
+{% endblock %}

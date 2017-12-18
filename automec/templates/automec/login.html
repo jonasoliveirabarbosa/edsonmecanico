@@ -1,0 +1,15 @@
+{% extends 'automec/index.html' %}
+
+{% block content %}
+  <div id="forms">
+      <h1>login</h1>
+        <form name="LoginForm" action="/login/" method="post">{%csrf_token %}
+          <center>
+        <input type="text" id="username" name="username" class='formulario'  placeholder="Username">
+        <input type="password" name="password" class='formulario' id="password" placeholder="Password">
+        </br>
+        <button type="submit" class="save btn btn-default">Login</button>
+      </center>
+    </form>
+  </div>
+{% endblock %}

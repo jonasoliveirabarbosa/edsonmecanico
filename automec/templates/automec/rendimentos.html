@@ -1,0 +1,60 @@
+{% extends 'automec/index.html' %}
+{% block content %}
+
+<div id="forms">
+    <h1>Rendimentos</h1>
+    <br>
+
+      <form action="{% url 'rendimento' %}" method="get" accept-charset="utf-8">
+        <select class="choiceBusca" name="q">
+          <option value="1" {%if mesAtual == 1%} selected {%endif%}>Janeiro</option>
+          <option value="2" {%if mesAtual == 2%} selected {%endif%}>Fevereiro</option>
+          <option value="3" {%if mesAtual == 3%} selected {%endif%}>Março</option>
+          <option value="4" {%if mesAtual == 4%} selected {%endif%}>Abril</option>
+          <option value="5" {%if mesAtual == 5%} selected {%endif%}>Maio</option>
+          <option value="6" {%if mesAtual == 6%} selected {%endif%}>Junho</option>
+          <option value="7" {%if mesAtual == 7%} selected {%endif%}>Julho</option>
+          <option value="8" {%if mesAtual == 8%} selected {%endif%}>Agosto</option>
+          <option value="9" {%if mesAtual == 9%} selected {%endif%}>Setembro</option>
+          <option value="10" {%if mesAtual == 10%} selected {%endif%}>Outubro</option>
+          <option value="11" {%if mesAtual == 11%} selected {%endif%}>Novembro</option>
+          <option value="12" {%if mesAtual == 12%} selected {%endif%}>Dezembro</option>
+        </select>
+          <button type="submit" class="save btn btn-default">Buscar</button>
+      </form>
+  <br>
+    <table>
+  <tr>
+      <th>Carro</th>
+      <th>Valor</th>
+      <th>Pago</th>
+      <th>Pagar</th>
+      <th>Remover</th>
+      <th>Ativar</th>
+      <th>Editar</th>
+  </tr>
+  {% for servico in servicos %}
+  <tr>
+      <td>{{ servico.carro }}</td>
+      <td>{{ servico.valorTotal}}</td>
+      <td>{{ servico.valorPago }}</td>
+      <td>{{ servico.valorApagar }}</td>
+      <td><a href="/servico/{{ servico.id }}/remove/"><i class="fa fa-minus-square-o"></i></a></</td>
+      <td><a href="/servico/{{ servico.id }}/ativar/"><i class="fa fa-check-square-o"></i></a></</td>
+      <td><a href="/servico/{{ servico.id }}/editar/"><i class="fa fa-pencil-square-o"></i></a></</td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+<table>
+   <h2>Resumo do Mês</h2>
+  <tr>
+    <th>Valor Total</th>  <td>{{somaTotal}}</td>
+    <th>Valor a Pagar</th>  <td>{{totalPagar}}</td>
+    <th>Valor Arrecadado</th>  <td>{{totalPago}}</td>
+  </tr>
+</table>
+</div>
+
+{% endblock %}

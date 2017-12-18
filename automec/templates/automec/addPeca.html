@@ -1,0 +1,36 @@
+{% extends 'automec/index.html' %}
+
+{% block content %}
+<div id="forms">
+    <h1>Peças Trocadas</h1>
+    <form method="POST" class="peca-form">{% csrf_token %}
+              <table>
+            <tr>
+                <th>Peça</th>
+                <th>Valor</th>
+                <th>Remover</th>
+                <th>Editar</th>
+            </tr>
+            {% for peca in pecas %}
+            <tr>
+                <td>{{ peca.nome }}</td>
+                <td>{{ peca.valor }}</td>
+                <td><a href="/peca/{{ peca.id }}/remove/"><i class="fa fa-minus-square-o"></i></a></</td>
+                  <td><a href="/peca/{{ peca.id }}/editar/"><i class="fa fa-pencil-square-o"></i></a></</td>
+            </tr>
+            {% endfor %}
+          <tr>
+            <td colspan="4">Valor Peças: {{valorTotalPecas}}</td>
+          </tr>
+          </tr>
+            <td colspan="4">Valor Mão de Obra: {{request.session.serv_atual.valorMaoObra}}</td>
+          </tr>
+        </tr>
+          <td colspan="4">Valor Total: {{valorTotal}}</td>
+        </tr>
+        </table>
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Guardar</button>
+    </form>
+  </div>
+{% endblock %}

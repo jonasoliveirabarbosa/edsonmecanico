@@ -1,0 +1,18 @@
+{% extends 'automec/index.html' %}
+
+{% block content %}
+<div id="forms">
+
+    <h1>Servico Cadastrado com Sucesso !</h1>
+
+      <font size="5px">
+  <b>Dono:</b> {{servico.carro.dono.nome}}
+  <br/>
+  <b>Modelo Carro:</b> {{servico.carro.modelo}}
+  <br/>
+  <b>Placa:</b> {{servico.carro.placa}}
+  <br/>
+  <b>Valor:</b> R$ {{servico.valorMaoObra}}
+<br/></font>
+</div>
+{% endblock %}

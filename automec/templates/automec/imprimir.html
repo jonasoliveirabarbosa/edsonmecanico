@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">  <html lang="pt">
+<html>
+<head>
+  {% load staticfiles %}
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static "automec/icon/favicon-32x32.png" %}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{% static "automec/icon/favicon-96x96.png" %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static "automec/icon/favicon-16x16.png" %}">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Automecânica JJ Edson</title>
+  <link rel=stylesheet type=text/css href="{% static "automec/style.css" %}" >
+  <link rel="stylesheet" href="{% static "automec/fonta/css/font-awesome.min.css" %}">
+  <script src="{% static "automec/jquery.js" %}"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="mecanica">
+      <h1>Automecanica JJ Edson</h1>
+      <i class="fa fa-phone" ></i>  3455-4728
+      <img src="{% static "automec/oi.gif" %}" alt="oi" height="10" width="10"> 96725-6107
+      <img src="{% static "automec/tim.gif" %}" alt="tim" height="10" width="12"> 97047-1945
+      <img src="{% static "automec/nextel.png" %}" alt="nextel" height="10" width="10"> 94700-8390
+      ID 35*36*5811</br>
+      Rua Jaimer Balmer, 25 Jd.Leme - SP
+
+    </div>
+    <div class="dados">
+      <div class="conteudoDireita">
+        <b>Cliente:</b> {{cliente.nome}}<br>
+        <b>Ano:</b> {{carro.ano}}<br>
+        <b>Data do Serviço:</b> {{request.session.serv_atual.data | date:'d/m/Y'}}<br>
+      </div>
+      <div class="conteudoMeio">
+        <b>Marca:</b> {{carro.marca}} <br>
+        <b>KM:</b> {{request.session.serv_atual.km}}<br>
+      </div>
+      <div class="conteudoEsquerda">
+        <b>Modelo:</b> {{carro.modelo}}<br>
+        <b>Placa:</b> {{carro.placa}} <br>
+      </div>
+    </div>
+    <div class="pecasTrocadas">
+      <h2>Peças Trocadas</h2>
+
+      <table>
+        <tr>
+          <th>Nome de Peça </th>
+          <th>Valor (R$)</th>
+        </tr>
+        {% for peca in pecas %}
+        <tr>
+          <td>{{ peca.nome }}</td>
+          <td>{{ peca.valor }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% if pagamentos|length != 0%}
+    <div class="pecasTrocadas">
+      <h2>Pagementos Realizados</h2>
+
+      <table>
+        <tr>
+          <th>Tipo </th>
+          <th>Valor (R$)</th>
+          <th>Data</th>
+          <th>Parcela</th>
+        </tr>
+        {% for pagamento in pagamentos %}
+        <tr>
+
+          <td>{{ pagamento.tipoPagamento }}</td>
+          <td>{{ pagamento.valor }}</td>
+          <td>{{ pagamento.data | date:'d/m/Y'}}</td>
+          <td>{{ pagamento.parcelas }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+      {% endif %}
+    <div class="valores">
+      <p>
+        <b>Valor Mão de Obra:</b>  R$ {{ request.session.serv_atual.valorMaoObra}}</br>
+        <b>Valor Peças:</b> R$ {{valorPecas}} </br>
+        <b>Valor Total Servico:</b> R$ {{valorTotal}} </br>
+        {%if pagamentos|length != 0%}
+        <b>Valor total pago:</b> R$ {{pago}} </br>
+        <b>Valor total a pargar:</b> R$ {{pagar}}</br>
+        {% endif %}
+        Garantia de Peças e Mão de Obra 3 Meses
+      </p>
+    </div>
+  </div>
+</body>
+
+
+</html>

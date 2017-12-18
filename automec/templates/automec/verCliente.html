@@ -1,0 +1,70 @@
+{% extends 'automec/index.html' %}
+
+{% block content %}
+
+<div id="views">
+  <h3>Dados do Cliente</h3>
+  <table>
+    <tr>
+      <th>Nome</th>
+      <th>Telefone</th>
+      <th>Celular</th>
+    </tr>
+    <tr>
+      <td>{{ cliente.nome}}</td>
+      <td>{{ cliente.telefone }}</td>
+      <td>{{ cliente.celular }}</</td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <th colspan="2">Endereço</th>
+    </tr>
+    <tr>
+      <td>{{ cliente.email}}</td>
+      <td colspan="2">{{ cliente.endereco }}</td>
+    </tr>
+
+<tr>   <th colspan='3'>Carro do Cliente   </th></tr>
+{% if carros|length != 0%}
+
+  <tr>
+    <th>Marca</th>
+    <th>Modelo</th>
+    <th>Placa</th>
+  </tr>
+  {% for carro in carros %}
+  <tr>
+    <td>{{ carro.marca }}</td>
+    <td>{{ carro.modelo }}</td>
+    <td>{{ carro.placa }}</</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<h3>Servicos do Cliente</h3>
+{% if servicos|length != 0%}
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Valor Total</th>
+    <th>Valor Pago</th>
+    <th>Valor A Pagar</th>
+    <th>Ativar</th>
+  </tr>
+  {% for servico in servicos %}
+
+  <tr>
+    <td>{{ servico.data| date:'d/m/Y' }}</td>
+    <td>{{ servico.valorTotal}}</td>
+    <td>{{ servico.valorPago}}</td>
+    <td>{{ servico.valorApagar}}</td>
+    <td><a href="/servico/{{ servico.id }}/ativar/"><i class="fa fa-check-square-o"></i></a></</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+
+</div>
+{% endblock %}

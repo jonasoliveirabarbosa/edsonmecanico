@@ -1,0 +1,11 @@
+{% extends 'automec/index.html' %}
+
+{% block content %}
+  <div id="forms">
+      <h1>Cadastrar Usuario</h1>
+    <form method="POST" class="usuario-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Cadastrar</button>
+    </form>
+  </div>
+{% endblock %}
