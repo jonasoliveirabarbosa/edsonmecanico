@@ -29,11 +29,11 @@
       <div class="conteudoDireita">
         <b>Cliente:</b> {{cliente.nome}}<br>
         <b>Ano:</b> {{carro.ano}}<br>
-        <b>Data do Serviço:</b> {{request.session.serv_atual.data | date:'d/m/Y'}}<br>
+        <b>Data do Serviço:</b> {{servico.data | date:'d/m/Y'}}<br>
       </div>
       <div class="conteudoMeio">
         <b>Marca:</b> {{carro.marca}} <br>
-        <b>KM:</b> {{request.session.serv_atual.km}}<br>
+        <b>KM:</b> {{servico.km}}<br>
       </div>
       <div class="conteudoEsquerda">
         <b>Modelo:</b> {{carro.modelo}}<br>

@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 from django import forms
-from django.forms.extras.widgets import *
+from django.forms.widgets import *
 from django.forms import widgets
 from .models import *
 from dal import autocomplete
 from django.forms import TextInput, Textarea
 from django.utils.safestring import mark_safe
-from localflavor.br.forms import BRPhoneNumberField
-from input_mask.contrib.localflavor.br.widgets import BRPhoneNumberInput
 from input_mask.widgets import InputMask
 
 class UsuarioForm(forms.ModelForm):

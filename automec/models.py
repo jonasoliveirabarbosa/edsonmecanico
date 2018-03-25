@@ -26,15 +26,15 @@ class Carro(models.Model):
     modelo = models.CharField(max_length=200)
     placa = models.CharField(max_length=9)
     ano = models.IntegerField(blank = True)
-    dono = models.ForeignKey(Cliente)
+    dono = models.ForeignKey(Cliente, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.marca+' '+self.modelo+' - '+self.dono.nome
 
 class Servico(models.Model):
     valorMaoObra = models.DecimalField(max_digits=8, decimal_places=2)
-    carro = models.ForeignKey(Carro)
-    data = models.DateField('data',default=timezone.now())
+    carro = models.ForeignKey(Carro, on_delete=models.PROTECT)
+    data = models.DateField('data',default=timezone.now)
     km = models.IntegerField()
 
     def valorTotal(self):
@@ -66,7 +66,7 @@ class Servico(models.Model):
 class Peca(models.Model):
     nome = models.CharField(max_length=150)
     valor = models.DecimalField(max_digits=8, decimal_places=2)
-    servico = models.ForeignKey(Servico)
+    servico = models.ForeignKey(Servico, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.nome
@@ -75,17 +75,17 @@ class Pagamento(models.Model):
     tipoPagamento = models.CharField(max_length=150)
     valor = models.DecimalField(max_digits=8, decimal_places=2)
     parcelas = models.IntegerField()
-    data = models.DateField('data', default=timezone.now())
-    servico = models.ForeignKey(Servico)
+    data = models.DateField('data', default=timezone.now)
+    servico = models.ForeignKey(Servico, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.tipoPagamento
 
 class Custo(models.Model):
     valor = models.DecimalField(max_digits=8, decimal_places=2)
-    data = models.DateField('data', default=timezone.now())
+    data = models.DateField('data', default=timezone.now)
     descricao = models.CharField(max_length=150)
-    servico = models.ForeignKey(Servico)
+    servico = models.ForeignKey(Servico, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.descricao

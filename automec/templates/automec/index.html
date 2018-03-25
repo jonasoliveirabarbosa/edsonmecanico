@@ -25,25 +25,25 @@
 							<div id="menuTitle">Menu</div>
 							<ul class="mainmenu">
 								{% if user.is_authenticated %}
-									<li><a href="{% url 'automec.views.addCliente' %}">Clientes <i class="fa fa-chevron-down"></i></a>
+									<li><a href="{% url 'add_cliente' %}">Clientes <i class="fa fa-chevron-down"></i></a>
 									<ul class="submenu">
-												<li><a href="{% url 'automec.views.resultadoCliente' %}"> <i class="fa fa-search"></i> Buscar</a>
-													<a a href="{% url 'automec.views.addCliente' %}"> <i class="fa fa-file-o" ></i> Cadastrar</a>
+												<li><a href="{% url 'resultado_cliente' %}"> <i class="fa fa-search"></i> Buscar</a>
+													<a a href="{% url 'add_cliente' %}"> <i class="fa fa-file-o" ></i> Cadastrar</a>
 												</ul>
 											</li>
 											</li>
-									<li><a href="{% url 'automec.views.addCarro' %}">Carros</a></li>
+									<li><a href="{% url 'add_carro' %}">Carros</a></li>
 									<li><a>Serviços <i class="fa fa-chevron-down"></i></a>
 										<ul class="submenu">
-	                        <li><a href="{% url 'automec.views.resultadoServico' %}"> <i class="fa fa-search"></i> Buscar</a>
-														<a href="{% url 'automec.views.addServico' %}"> <i class="fa fa-file-o" ></i> Cadastrar</a>
+	                        <li><a href="{% url 'resultado_servico' %}"> <i class="fa fa-search"></i> Buscar</a>
+														<a href="{% url 'add_servico' %}"> <i class="fa fa-file-o" ></i> Cadastrar</a>
 													</ul>
 											</li>
 											</li>
-									<li><a href="{% url 'automec.views.addPagamento' %}">Pagamentos</a></li>
-									<li><a href="{% url 'automec.views.addPeca' %}">Peças</a></li>
-									<li><a href="{% url 'automec.views.imprimir' %}" target="_blank">Imprimir</a></li>
-									<li><a href="{% url 'automec.views.rendimentos' %}">Rendimentos</a></li>
+									<li><a href="{% url 'add_pagamento' %}">Pagamentos</a></li>
+									<li><a href="{% url 'add_peca' %}">Peças</a></li>
+									<li><a href="{% url 'imprimir' %}" target="_blank">Imprimir</a></li>
+									<li><a href="{% url 'rendimento' %}">Rendimentos</a></li>
 									{%endif%}
 								</ul>
 						</div>

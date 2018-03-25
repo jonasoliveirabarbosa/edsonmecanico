@@ -26,8 +26,8 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('automec.views.resultadoCliente')
-    return render_to_response('automec/login.html', context_instance=RequestContext(request))
+                return redirect('resultado_cliente')
+    return render(request, 'automec/login.html')
 
 @login_required(login_url='/login/')
 def addUsuario(request):
@@ -37,7 +37,7 @@ def addUsuario(request):
             valor = form.cleaned_data
             user = User.objects.create_user(valor['nome'], valor['email'],valor['senha'] )
             user.save()
-            return redirect('automec.views.addUsuario')
+            return redirect('add_usuario')
     else:
         form = UsuarioForm()
     return render(request, 'automec/addUsuario.html', {'form': form})
@@ -49,7 +49,7 @@ def addCliente(request):
         if form.is_valid():
             cliente = form.save(commit=False)
             cliente.save()
-            return redirect('automec.views.addCliente')
+            return redirect('add_cliente')
     else:
         form = ClienteForm()
     return render(request, 'automec/addCliente.html', {'form': form})
@@ -65,7 +65,7 @@ def editCliente(request, cliente_id=None):
             form.save()
             cliente = form.save(commit=False)
             cliente.save()
-            return redirect('automec.views.resultadoCliente')
+            return redirect('resultado_cliente')
     form = ClienteForm(instance=cliente)
     return render(request, 'automec/addCliente.html', {'form': form,
         'carros':carros, 'servicos':servicos})
@@ -95,10 +95,10 @@ def removeCliente(request, cliente_id):
     try:
         cliente = Cliente.objects.get(pk=cliente_id)
         cliente.delete()
-        return redirect('automec.views.resultadoCliente')
+        return redirect('resultado_cliente')
     except Servico.DoesNotExist:
-        return redirect('automec.views.resultadoCliente')
-    return redirect('automec.views.resultadoCliente')
+        return redirect('resultado_cliente')
+    return redirect('resultado_cliente')
 
 @login_required(login_url='/login/')
 def addCarro(request):
@@ -107,7 +107,7 @@ def addCarro(request):
         if form.is_valid():
             carro = form.save(commit=False)
             carro.save()
-            return redirect('automec.views.addCarro')
+            return redirect('add_carro')
     else:
         form = CarroForm()
 
@@ -121,14 +121,14 @@ def addServico(request):
             servico = form.save(commit=False)
             servico.save()
 
-	    servicoD = {}
+            servicoD = {}
             servicoD['id'] = servico.id
             servicoD['carro'] = servico.carro.marca+' - '+servico.carro.modelo
             servicoD['valorMaoObra'] = float(servico.valorMaoObra)
 
-            request.session['serv_atual']= servicoD	
+            request.session['serv_atual']= servicoD
             #request.session['serv_atual'] = servico.id
-            return redirect('automec.views.servicoSucesso')
+            return redirect('sucesso')
     else:
         form = ServicoForm()
     return render(request, 'automec/addServico.html', {'form': form})
@@ -142,13 +142,13 @@ def editServico(request, servico_id=None):
             form.save()
             servico = form.save(commit=False)
             servico.save()
-           
-	    servicoD = {}
+
+            servicoD = {}
             servicoD['id'] = servico.id
             servicoD['carro'] = servico.carro.marca+' - '+servico.carro.modelo
             servicoD['valorMaoObra'] = float(servico.valorMaoObra)
 
-            return redirect('automec.views.servicoSucesso')
+            return redirect('sucesso')
     form = ServicoForm(instance=servico)
     return render(request, 'automec/addServico.html', {'form': form})
 
@@ -156,17 +156,17 @@ def editServico(request, servico_id=None):
 def ativarServico(request,servico_id):
     try:
         servico = Servico.objects.get(pk=servico_id)
-	servicoD = {}
+        servicoD = {}
         servicoD['id'] = servico.id
         servicoD['carro'] = servico.carro.marca+' - '+servico.carro.modelo
         servicoD['valorMaoObra'] = float(servico.valorMaoObra)
 
-	
+
         request.session['serv_atual'] = servicoD
-        return redirect('automec.views.resultadoServico')
+        return redirect('resultado_servico')
     except Peca.DoesNotExist:
-        return redirect('automec.views.resultadoServico')
-    return redirect('automec.views.resultadoServico')
+        return redirect('resultado_servico')
+    return redirect('resultado_servico')
 
 @login_required(login_url='/login/')
 def removeServico(request, servico_id):
@@ -175,10 +175,10 @@ def removeServico(request, servico_id):
         servico.delete()
 
     except Servico.DoesNotExist:
-        return redirect('automec.views.resultadoServico')
+        return redirect('resultado_servico')
     if 'serv_atual' in request.session:
         del request.session['serv_atual']
-    return redirect('automec.views.resultadoServico')
+    return redirect('resultado_servico')
 
 @login_required(login_url='/login/')
 def servicoSucesso(request):
@@ -195,16 +195,16 @@ def addPeca(request):
     try:
         servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
     except (Session.DoesNotExist, KeyError):
-        return redirect('automec.views.SemAtivar')
+        return redirect('sem_ativar')
 
     if request.method == "POST":
         form = PecaForm(request.POST)
         if form.is_valid():
             peca = form.save(commit=False)
-	    servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
+            servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
             peca.servico = servico
             peca.save()
-            return redirect('automec.views.addPeca')
+            return redirect('add_peca')
     else:
         form = PecaForm()
 
@@ -218,16 +218,16 @@ def addPagamento(request):
     try:
         servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
     except (Session.DoesNotExist, KeyError):
-        return redirect('automec.views.SemAtivar')
+        return redirect('sem_ativar')
 
     if request.method == "POST":
         form = PagamentoForm(request.POST)
         if form.is_valid():
             pagamento = form.save(commit=False)
-	    servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
+            servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
             pagamento.servico = servico
             pagamento.save()
-            return redirect('automec.views.addPagamento')
+            return redirect('add_pagamento')
     else:
         form = PagamentoForm()
 
@@ -240,16 +240,16 @@ def addPagamento(request):
 def removePeca(request, peca_id):
     form = PecaForm()
     if 'serv_atual' in request.session:
-	servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
+        servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
         pecas = Peca.objects.filter(servico=servico)
 
     try:
         peca = Peca.objects.get(pk=peca_id)
         peca.delete()
-        return redirect('automec.views.addPeca')
+        return redirect('add_peca')
     except Peca.DoesNotExist:
-        return redirect('automec.views.addPeca')
-    return redirect('automec.views.addPeca')
+        return redirect('add_peca')
+    return redirect('add_peca')
 
 @login_required(login_url='/login/')
 def editPeca(request, peca_id=None):
@@ -260,11 +260,11 @@ def editPeca(request, peca_id=None):
             form.save()
             peca = form.save(commit=False)
             peca.save()
-            return redirect('automec.views.addPeca')
+            return redirect('add_peca')
     else:
         form = PecaForm(instance=peca)
 
-    servico = Servico.objects.get(pk=request.session['serv_atual']['id'])	
+    servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
     pecas = Peca.objects.filter(servico=servico)
     return render(request, 'automec/addPeca.html', {'form': form, 'pecas':pecas,
         'valorTotalPecas':calcularValorPecas(request),
@@ -278,10 +278,10 @@ def editPagamento(request,pagamento_id):
 
         if form.is_valid():
             pagamento = form.save(commit=False)
-            servico = Servico.objects.get(pk=request.session['serv_atual']['id']) 	
+            servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
             pagamento.servico = servico
             pagamento.save()
-            return redirect('automec.views.addPagamento')
+            return redirect('add_pagamento')
     else:
         form = PagamentoForm(instance = pagamento)
 
@@ -302,10 +302,10 @@ def removePagamento(request, pagamento_id):
     try:
         pagamento = Pagamento.objects.get(pk=pagamento_id)
         pagamento.delete()
-        return redirect('automec.views.addPagamento')
+        return redirect('add_pagamento')
     except Peca.DoesNotExist:
-        return redirect('automec.views.addPagamento')
-    return redirect('automec.views.addPagamento')
+        return redirect('add_pagamento')
+    return redirect('add_pagamento')
 
 @login_required(login_url='/login/')
 def buscarServico(request):
@@ -323,16 +323,16 @@ def resultadoServico(request):
 @login_required(login_url='/login/')
 def imprimir(request):
     try:
-	servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
+        servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
         total = servico.valorMaoObra + calcularValorPecas(request)
     except (Session.DoesNotExist, KeyError):
-        return redirect('automec.views.SemAtivar')
+        return redirect('sem_ativar')
     carro = servico.carro
     cliente = carro.dono
     pecas = Peca.objects.filter(servico=servico)
     pagamentos = Pagamento.objects.filter(servico=servico)
 
-    return render(request, 'automec/imprimir.html',{'cliente':cliente,'carro':carro,
+    return render(request, 'automec/imprimir.html',{'cliente':cliente,'carro':carro, 'servico':servico,
         'pecas':pecas,'valorPecas':calcularValorPecas(request),'pagamentos':pagamentos,'valorTotal':calcularValorTotal(request),
         'pago':calcularValorPago(request),'pagar':(calcularValorTotal(request) - calcularValorPago(request))})
 
@@ -362,7 +362,7 @@ def gastos(request):
         if form.is_valid():
             gasto = form.save(commit=False)
             gasto.save()
-            return redirect('automec.views.gastos')
+            return redirect('ver_gastos')
     else:
         form = GastoForm()
 
@@ -373,7 +373,7 @@ def gastos(request):
 def calcularValorPecas(request):
     valorPecas = decimal.Decimal('0.00')
     try:
-	servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
+        servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
         pecas = Peca.objects.filter(servico=servico)
         for peca in pecas:
             valorPecas = valorPecas + peca.valor
@@ -394,7 +394,7 @@ def calcularValorPago(request):
 def calcularValorTotal(request):
     total = decimal.Decimal('0.00')
     try:
-	servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
+        servico = Servico.objects.get(pk=request.session['serv_atual']['id'])
         total = servico.valorMaoObra + calcularValorPecas(request)
         return total
     except (Session.DoesNotExist, KeyError):
