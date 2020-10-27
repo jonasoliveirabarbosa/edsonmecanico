@@ -7,7 +7,7 @@ chardet==3.0.4
 colorclass==2.2.0
 ConfigArgParse==0.13.0
 configobj==5.0.6
-cryptography==2.2.1
+cryptography==3.2
 dj-static==0.0.6
 Django==2.0.3
 -e git+https://github.com/yourlabs/django-autocomplete-light.git@28c9ece17118691dbdc97c24c9a0002dfd892517#egg=django_autocomplete_light
