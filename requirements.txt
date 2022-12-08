@@ -1,7 +1,7 @@
 acme==0.22.2
 asn1crypto==0.24.0
 certbot==0.22.2
-certifi==2018.1.18
+certifi==2022.12.7
 cffi==1.11.5
 chardet==3.0.4
 colorclass==2.2.0
